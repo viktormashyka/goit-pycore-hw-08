@@ -3,11 +3,11 @@ from datetime import datetime
 from functools import wraps
 import pickle
 
-def save_data(book, filename="addressbook.pkl"):
+def save_data(book, filename="address_book.pkl"):
     with open(filename, "wb") as f:
         pickle.dump(book, f)
 
-def load_data(filename="addressbook.pkl"):
+def load_data(filename="address_book.pkl"):
     try:
         with open(filename, "rb") as f:
             return pickle.load(f)
@@ -219,13 +219,17 @@ def help():
     print("\texit or close - exit")
 
 def main():
-    book = AddressBook()
+    book = load_data()
+
+    # Основний цикл програми
+    # book = AddressBook()
     print("Welcome to the assistant bot!")
     while True:
         user_input = input("Enter a command: ")
         command, *args = parse_input(user_input)
 
         if command in ["close", "exit"]:
+            save_data(book)  # Викликати перед виходом з програми
             print("Good bye!")
             break
         elif command == "hello":
